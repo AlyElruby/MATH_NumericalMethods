@@ -1,0 +1,30 @@
+prompt='Please enter the number of coordinates ';
+n=input(prompt);
+x=zeros(1,n);
+y=zeros(1,n);
+for i=1:n
+    fprintf('Enter the node no. %d \n',i);
+    x(i)=input('X coordinate  ');
+    y(i)=input('Y coordinate  ');
+end
+sx=sum(x);
+ssx=sum(x.^2);
+sy=sum(y);
+sxy=sum(x.*y);
+a=[n,sx;sx,ssx];
+b=[sy;sxy];
+sol=zeros(2,1);
+sol=a\b;
+t=linspace(x(1),x(n));
+yt=sol(1)+ sol(2)*t;
+plot(t,yt,'-r');
+hold on;
+plot(x, y, '.', 'markersize', 20);
+grid on;
+grid minor;
+ym=sy/n;
+st=sum((y-ym).^2);
+sr=sum((y-sol(1)-sol(2).*x).^2);
+rs=(st-sr)/st;
+r=sqrt(rs);
+fprintf('Coefficient of Determination = %f \nCorrelation Coefficient = %f \n',rs,r);
